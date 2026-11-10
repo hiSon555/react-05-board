@@ -4,8 +4,14 @@ import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 import { Link } from "react-router";
 
+type Post = {
+    id: string;
+    title: string;
+    userId: string;
+}
+
 function Home() {
-    const [list, setList] = useState([]);
+    const [list, setList] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true); // 로딩 과정인지 아닌지를 boolean으로 저장
 
     useEffect(() => {
