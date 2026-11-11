@@ -5,6 +5,61 @@ import { Link } from "react-router";
 import { BoardTable, Container, IdCell, Loading, TableRow, Title, TitleCell, UserIdCell } from "./HomeStyle.ts";
 import type { Post } from "../types/Post.ts";
 
+// 같은 스타일링을 제공해야하는 다른 태그가 있을 때 styled-components에서 처리하는 방법
+
+// 1. 그냥 쌩으로 두 개를 만든다
+// const TdIdCell = styled.td`
+//     width: 80px;
+//     text-align: center;
+//     color: #888;
+// `;
+//
+// const ThIdCell = styled.th`
+//     width: 80px;
+//     text-align: center;
+//     color: #888;
+// `;
+
+// 2. CSS를 담당하는 변수를 하나 더 만들어서, 각각 부여한다 (추천)
+// const IdCellStyles = css`
+//     width: 80px;
+//     text-align: center;
+//     color: #888;
+// `;
+//
+// const TdIdCell = styled.td`
+//     ${IdCellStyles}
+//     // 또다른 CSS를 추가할 수 있다
+// `;
+// const ThIdCell = styled.th`
+//     ${IdCellStyles}
+//     // 또다른 CSS를 추가할 수 있다
+// `;
+
+// 3. 하나의 styled컴포넌트로 쓰는 방법
+// const IdCell = styled.td`
+//     width: 80px;
+//     text-align: center;
+//     color: #888;
+// `;
+//
+// const TitleCell = styled.td`
+//     text-align: left;
+// `;
+//
+// const UserIdCell = styled.td`
+//     text-align: center;
+//     color: #666;
+// `;
+//
+// const StyledLink = styled(Link)`
+//     color: #333;
+//
+//     &:hover {
+//         color: #191969;
+//     }
+// `;
+
 // 리액트에서의 "컴포넌트"라는 녀석은
 function Home() {
     const [list, setList] = useState<Post[]>([]);
