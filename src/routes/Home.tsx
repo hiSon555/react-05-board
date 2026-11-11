@@ -4,12 +4,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { BoardTable, Container, IdCell, Loading, TableRow, Title, TitleCell, UserIdCell } from "./HomeStyle.ts";
 
-type Post = {
+export type Post = {
+    userId: number;
     id: number;
     title: string;
-    userId: number;
-}
+    body: string;
+};
 
+// 리액트에서의 "컴포넌트"라는 녀석은
 function Home() {
     const [list, setList] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true); // 로딩 과정인지 아닌지를 boolean으로 저장
@@ -17,11 +19,17 @@ function Home() {
     useEffect(() => {
         fetch("https://jsonplaceholder.typicode.com/posts")
             .then(res => res.json())
-            .then(json => {
+            .then((json: Post[]) => {
                 setList(json);
                 setLoading(false);
             })
-            .catch(err => console.log(err));
+            .catch((err: unknown) => {
+              if (err instanceof Error) {
+                  console.log(err.message);
+              } else {
+                  console.log("알 수 없는 에러 : " + err);
+              }
+            });
     }, []);
 
     if (loading) {

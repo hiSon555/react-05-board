@@ -1,15 +1,19 @@
 // 이 파일은 글 상세 화면을 담당하는 컴포넌트 파일
 
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import styles from "./Detail.module.css";
+import { Article, BackLink, Body, Container, Loading, PostMeta, Title } from "./DetailStyle.ts";
+import type { Post } from "./Home.tsx";
 
-type Post = {
-    userId : number;
-    id : number;
-    title : string;
-    body : string;
-}
+// type Post = {
+//     userId: number;
+//     id: number;
+//     title: string;
+//     body: string;
+// };
+// Home.tsx에서 타입을 수입해봤음
+// 단점은 경로가 바뀌었을 때나 홈의 상태가 바뀌면 불러오지 못할 수도 있으니
+// 타입의 태그를 만드는 게 권장됨
 
 function Detail() {
     const { id } = useParams();
@@ -28,27 +32,27 @@ function Detail() {
     }, []);
 
     if (loading) {
-        return <div className={styles.loading}>본문을 불러오는 중입니다...</div>;
+        return <Loading>본문을 불러오는 중입니다...</Loading>;
     }
 
     if (!post) {
-        return <div className={styles.loading}>존재하지 않는 게시글입니다.</div>;
+        return <Loading>존재하지 않는 게시글입니다.</Loading>;
     }
 
     return (
-        <div className={styles.container}>
-            <Link to={"/"} className={styles.backLink}>&larr; 목록으로 돌아가기 &darr;</Link>
+        <Container>
+            <BackLink to={"/"}>&larr; 목록으로 돌아가기 &darr;</BackLink>
 
-            <article className={styles.article}>
-                <h1 className={styles.title}>{post.title}</h1>
-                <div className={styles.meta}>
+            <Article>
+                <Title>{post.title}</Title>
+                <PostMeta>
                     <span>게시물 번호 : {post.id}</span>
                     <span style={{ margin: "0 12px" }}>/</span>
                     <span>작성자 : {post.userId}</span>
-                </div>
-                <div className={styles.body}>{post.body}</div>
-            </article>
-        </div>
+                </PostMeta>
+                <Body>{post.body}</Body>
+            </Article>
+        </Container>
     );
 }
 
