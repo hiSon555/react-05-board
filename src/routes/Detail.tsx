@@ -4,10 +4,17 @@ import { Link, useParams } from "react-router";
 import { useEffect, useState } from "react";
 import styles from "./Detail.module.css";
 
+type Post = {
+    userId : number;
+    id : number;
+    title : string;
+    body : string;
+}
+
 function Detail() {
     const { id } = useParams();
 
-    const [post, setPost] = useState(null);
+    const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
