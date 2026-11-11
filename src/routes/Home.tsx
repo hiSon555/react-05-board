@@ -3,13 +3,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { BoardTable, Container, IdCell, Loading, TableRow, Title, TitleCell, UserIdCell } from "./HomeStyle.ts";
-
-export type Post = {
-    userId: number;
-    id: number;
-    title: string;
-    body: string;
-};
+import type { Post } from "../types/Post.ts";
 
 // 리액트에서의 "컴포넌트"라는 녀석은
 function Home() {
