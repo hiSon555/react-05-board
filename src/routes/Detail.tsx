@@ -3,9 +3,9 @@
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { Article, BackLink, Body, Container, Loading, PostMeta, Title } from "./DetailStyle.ts";
-import type { Post } from "./Home.tsx";
+import type { Post } from "../types/Post.ts";
 
-// type Post = {
+// type Post.ts = {
 //     userId: number;
 //     id: number;
 //     title: string;
@@ -16,7 +16,11 @@ import type { Post } from "./Home.tsx";
 // 타입의 태그를 만드는 게 권장됨
 
 function Detail() {
-    const { id } = useParams();
+    // 경로 상에 존재하는 값을 react-router가 가지고 있고, 그걸 꺼내오는 함수
+    // /321hkf3312
+    // 이렇게 꺼내온 값은 무조건 string?
+    // id값은 무조건 존재하는가?  => useParams라는 메서드는 실행되기 전, 설계도 상황으로 생각
+    const { id } = useParams();     // id의 타입은 string | undefined
 
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
@@ -24,11 +28,17 @@ function Detail() {
     useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
             .then(res => res.json())
-            .then(json => {
+            .then((json: Post) => {
                 setPost(json);
                 setLoading(false);
             })
-            .catch(err => console.log(err));
+            .catch((err: unknown)=> {
+                if (err instanceof Error) {
+                    console.log(err.message);
+                } else {
+                    console.log(err);
+                }
+            })
     }, []);
 
     if (loading) {
